@@ -3,6 +3,13 @@ auth:
   existingSecret: mongodb-secrets
 persistence:
   size: 20Gi
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
 useStatefulSet: true
 metrics:
   ## @param metrics.enabled Enable using a sidecar Prometheus exporter
