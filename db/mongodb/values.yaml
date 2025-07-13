@@ -1,0 +1,27 @@
+architecture: standalone
+auth:
+  existingSecret: mongodb-secrets
+persistence:
+  size: 10Gi
+useStatefulSet: true
+metrics:
+  ## @param metrics.enabled Enable using a sidecar Prometheus exporter
+  ##
+  enabled: true
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: platform
+          operator: In
+          values:
+          - databases
+extraVolumeMounts:
+  - mountPath: /docker-entrypoint-initdb.d/init-script.js
+    name: mongo-init-script
+    subPath: init-script.js
+extraVolumes:
+  - name: mongo-init-script
+    secret:
+      secretName: mongo-init-secret
