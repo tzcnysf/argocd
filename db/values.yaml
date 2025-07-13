@@ -2,7 +2,6 @@ global:
   postgresql:
     auth:
       existingSecret: "postgresql-secrets"
-
 architecture: standalone
 primary:
   persistence:
