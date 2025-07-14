@@ -1,0 +1,59 @@
+USER-SUPPLIED VALUES:
+fullnameOverride: kafka
+#heapOpts: -Xmx4096m -Xms4096m
+listeners:
+  advertisedListeners: ""
+  client:
+    containerPort: 9092
+    name: CLIENT
+    protocol: PLAINTEXT
+    sslClientAuth: ""
+  controller:
+    containerPort: 9093
+    name: CONTROLLER
+    protocol: PLAINTEXT
+    sslClientAuth: ""
+  external:
+    containerPort: 9095
+    name: EXTERNAL
+    protocol: PLAINTEXT
+    sslClientAuth: ""
+  extraListeners: []
+  interbroker:
+    containerPort: 9094
+    name: INTERNAL
+    protocol: SASL_PLAINTEXT
+logRetentionHours: 24
+nameOverride: kafka
+persistence:
+  size: 10Gi
+replicaCount: 1
+tolerations:
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: platform
+          operator: In
+          values:
+          - databases
+autoCreateTopicsEnable: false
+controller:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: platform
+            operator: In
+            values:
+            - databases
+  persistence:
+    size: 10Gi
+  replicaCount: 1
+metrics:
+  jmx:
+    ## @param metrics.jmx.enabled Whether or not to expose JMX metrics to Prometheus
+    ##
+    enabled: true

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: databases
+    server: 'https://kubernetes.default.svc'
+  project: k8s
+  syncPolicy: {}
+  sources:
+  - repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: kafka
+    targetRevision: 32.3.3
+    helm:
+      valueFiles:
+      - $values/db/kafka/values.yaml
+  - repoURL: 'https://github.com/tzcnysf/argocd.git'
+    targetRevision: main
+    ref: values
