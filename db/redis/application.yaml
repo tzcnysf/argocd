@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis
+  namespace: argocd
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: databases
+  project: k8s
+  syncPolicy: {}
+  sources:
+    - repoURL: 'https://charts.bitnami.com/bitnami'
+      chart: redis
+      targetRevision: 21.2.10
+      helm:
+        valueFiles:
+          - $values/db/redis/values.yaml
+    - repoURL: 'https://github.com/tzcnysf/argocd.git'
+      targetRevision: main
+      ref: values

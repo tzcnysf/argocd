@@ -1,0 +1,21 @@
+USER-SUPPLIED VALUES: null
+architecture: standalone
+auth:
+  existingSecret: redis-secret
+  existingSecretPasswordKey: redis-password
+metrics:
+  ## @param metrics.enabled Start a side-car prometheus exporter
+  ##
+  enabled: true
+master:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: platform
+            operator: In
+            values:
+            - databases
+  persistence:
+    size: 10Gi
